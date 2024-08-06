@@ -2,13 +2,14 @@ import cv2
 from cvzone.HandTrackingModule import HandDetector
 import numpy as np
 import math
-
+import time
 cap = cv2.VideoCapture(0)
 detector = HandDetector(maxHands=1)
 
 offset = 20  # Offset for the bounding box
 imgSize = 300  # Size of the output image
-
+folder ="Image-Data/Z"
+counter = 0
 while True:
     success, img = cap.read()
     if not success:
@@ -49,8 +50,11 @@ while True:
         cv2.imshow("ImageWhite", imgWhite)
 
     cv2.imshow("Image", img)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+    key =cv2.waitKey(1)
+    if key == ord('s'):
+       cv2.imwrite(f'{folder}/Image_{time.time()}.jpg',imgWhite)
+       print(counter)
+
 
 cap.release()
 cv2.destroyAllWindows()
